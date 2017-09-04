@@ -1,22 +1,18 @@
-#!/usr/bin/python3
+	#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import sys
 import argparse
 
 def createParser ():
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers (dest='command')
+	parser = argparse.ArgumentParser()
+	subparsers = parser.add_subparsers (dest='command')
 
-    read_parser = subparsers.add_parser ('read')
-    read_parser.add_argument('-r', '--read', default='notes.txt')
+	read_parser = subparsers.add_parser ('read')
 
-    add_parser = subparsers.add_parser ('add')
-    add_parser.add_argument('-a', '--add', nargs='+', default='none')
+	add_parser = subparsers.add_parser ('add')
+	add_parser.add_argument('-t', '--task', nargs='+', required=True)
 
-    return parser
-
-def run_add ():
-	print('Добавляем запись')
+	return parser
 
 def run_read ():
 	print('Читаем записи из файла')
@@ -28,6 +24,8 @@ if __name__ == "__main__":
 	if namespace.command == "read":
 		run_read()
 	elif namespace.command == "add":
-		run_add()
+		taskName, taskDate = namespace.task[0], namespace.task[1]
+		print("Task: " + taskName + " - " + taskDate)
 	else:
-		print("нет такой команды")
+		print("Usage: \n")
+		print("manager.py add -t \"taskName\" taskDate")
